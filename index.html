@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>draw lots</title>
+</head>
+<body>
+  <h1>Draw Lots</h1>
+    <form id="form">
+        <label for="numberOfPeople">number of People</label>
+        <input type="number" id="numberOfPeople"><br>
+        <label for="numberOfTeam">number of a Team</label>
+        <input type="number" id="numberOfTeam"><br>
+        <label for="names">names</label>
+        <input type="text" id="names">
+        <button id="addName">add name</button>
+        <button id="button">go</button>
+        <p>output Names:</p>
+        <p id="nameOutput"></p>
+        <p>teams: </p>
+        <p id="chunkedPeople"></p>
+    </form>
+    <script>
+        const numberOfPeople = document.getElementById("numberOfPeople");
+        const numberOfTeam = document.getElementById("numberOfTeam");
+        //const names = document.getElementById("names");
+        const button = document.getElementById("button");
+        const addName=document.getElementById("addName");
+        const nameOutput=document.getElementById("nameOutput")
+
+        const people=[];
+        let finalArray = [];
+
+        //shuffle the arrays order
+        function shuffle(array) {
+          var i = 0,
+            j = 0,
+            temp = null;
+
+          for (i = array.length - 1; i > 0; i -= 1) {
+            j = Math.floor(Math.random() * (i + 1));
+            temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+          }
+          return array;
+        }
+
+        function chunkArray(array, teamNumber) {
+          
+          for (let i = 0; i < array.length; i += teamNumber) {
+            finalArray.push(array.slice(i, teamNumber + i));
+          }
+          console.log("finalArray",finalArray)
+          return finalArray;
+        }
+
+
+        addName.addEventListener("click",(e)=>{
+            e.preventDefault();
+            const name = document.getElementById("names").value;
+            people.push(name)
+          
+            // people.forEach(person=>{
+            //   return person
+
+            // })
+            
+            document.getElementById("nameOutput").innerHTML=people
+        })
+
+
+        button.addEventListener("click", function buttonOnClick(e) {
+          e.preventDefault();
+          const number = numberOfPeople.value;
+          const team = parseInt(numberOfTeam.value);
+          const chunkedPeople=document.getElementById("chunkedPeople")
+
+          const newArray = shuffle(people);
+          const chunked=chunkArray(newArray, team);
+          console.log("chunked",chunked)
+          chunked.forEach((group,index)=>{
+            chunkedPeople.innerHTML += `${index}: ${group} <br>`
+          })
+            
+        });
+
+        //const people = ["a", "b", "c", "d", "e", "f", "g", "e"];
+
+        // const newArray = shuffle(names);
+        //console.log(newArray);
+
+        //another way to shuffle the arrays order
+        //people.sort((a, b) => 0.5 - Math.random());
+        // console.log(people);
+
+        // chunk
+
+    </script>
+</body>
+</html>
