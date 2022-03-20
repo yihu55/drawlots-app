@@ -5,27 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>draw lots</title>
+    <style>
+      body{
+        background-color: aquamarine;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #form input{
+        margin:20px;
+        padding:10px;
+
+      }
+      button{
+        padding: 10px;
+      }
+    </style>
 </head>
 <body>
   <h1>Draw Lots</h1>
     <form id="form">
-        <label for="numberOfPeople">number of People</label>
+        <label for="numberOfPeople">amount of People</label>
         <input type="number" id="numberOfPeople"><br>
         <label for="numberOfTeam">number of a Team</label>
         <input type="number" id="numberOfTeam"><br>
         <label for="names">names</label>
-        <input type="text" id="names">
-        <button id="addName">add name</button>
-        <button id="button">go</button>
-        <p>output Names:</p>
-        <p id="nameOutput"></p>
-        <p>teams: </p>
+        <input type="text" id="names" onfocus="this.value=''">
+        <button id="addName">add name</button><br>
+        <button id="button">start casting lots</button>
+        <p>Output Names:
+        <span id="nameOutput"></span></p>
+        <p>Teams: </p>
         <p id="chunkedPeople"></p>
     </form>
     <script>
         const numberOfPeople = document.getElementById("numberOfPeople");
         const numberOfTeam = document.getElementById("numberOfTeam");
-        //const names = document.getElementById("names");
         const button = document.getElementById("button");
         const addName=document.getElementById("addName");
         const nameOutput=document.getElementById("nameOutput")
@@ -60,7 +76,9 @@
 
         addName.addEventListener("click",(e)=>{
             e.preventDefault();
+           
             const name = document.getElementById("names").value;
+            
             people.push(name)
           
             // people.forEach(person=>{
@@ -82,7 +100,7 @@
           const chunked=chunkArray(newArray, team);
           console.log("chunked",chunked)
           chunked.forEach((group,index)=>{
-            chunkedPeople.innerHTML += `${index}: ${group} <br>`
+            chunkedPeople.innerHTML += `group ${index+1}: ${group} <br>`
           })
             
         });
